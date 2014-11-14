@@ -4,14 +4,11 @@
 #define intMAX 10
 #define charMAX 1000
 
-char W[charMAX];
-char C[charMAX];
-char R[charMAX];
-char a[charMAX];
+int n, i, j, k, b;
+int temp=0, root, min, min1;
 char ele[intMAX][intMAX];
+char W[charMAX], C[charMAX], R[charMAX], a[charMAX];
 float w[intMAX][intMAX], c[intMAX][intMAX], r[intMAX][intMAX], p[intMAX], q[intMAX];
-int temp=0, root, min, min1, n;
-int i,j,k,b;  
 
 void treeOutput(int i, int j, int w, int c, int r) {
 
@@ -19,11 +16,9 @@ void treeOutput(int i, int j, int w, int c, int r) {
    sprintf(C, "%sC[%d][%d]: %d\t",C,i,j, c);
    sprintf(R, "%sR[%d][%d]: %d\t",R,i,j, r);
 
-  }
-
 }
 
-void printLevel(){
+void printLevel() {
 
     printf("\n%s\n%s\n%s\n",W,C,R);
     sprintf(W,"");
@@ -35,34 +30,28 @@ void printLevel(){
 void getInput(){
 
   printf("Enter the number of elements:");
-
   scanf("%d",&n);
-
+ 
   printf("\n--------------------------------\n");
-
   for(i=1; i <= n; i++) {
 
     printf("Enter the A of %d:",i);
-   
     scanf("%s",&a[i]);
  
   }
 
   printf("\n--------------------------------\n");
-
   for(i=1; i <= n; i++) {
 
     printf("Enter the P (Element) of %d:",i);
-   
     scanf("%f",&p[i]);
  
   }
-  printf("\n--------------------------------\n");
 
+  printf("\n--------------------------------\n");
   for(i=0; i <= n; i++) {
 
     printf("Enter the Q (Probability) of %d:",i);
-   
     scanf("%f",&q[i]);
 
   }
@@ -71,10 +60,9 @@ void getInput(){
 
 }
 
-void main() {
+int main() {
 
  getInput();
- printKeys();
 
   for(i=0; i <= n; i++){
 
@@ -83,9 +71,7 @@ void main() {
       if(i == j){
 
         w[i][j] = q[i];
-
         c[i][j] = 0;
-
         r[i][j] = 0;
 
        treeOutput(i,j,w[i][j],c[i][j],r[i][j]);
@@ -115,7 +101,6 @@ void main() {
           if(min > min1){
         
             min = min1;
-
             temp = k;
 
           }
@@ -144,4 +129,5 @@ void main() {
 
   getchar();
 
+return 0;
 }
