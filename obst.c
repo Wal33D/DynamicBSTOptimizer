@@ -22,41 +22,44 @@
 #define intMAX 10
 #define charMAX 1000
 
-/*Error handling for pthread_create and pthread_join*/
-#define handle_error_en(en, msg) \
-        do { errno = en; perror(msg); exit(EXIT_FAILURE); } while (0)
-
-  int n;
-
 struct treeStats {
+  
+  int n;
+  float temp, root, min, min1;
 
-  int temp;
-  int root;
-  int min;
-  int min1;
+}ts;
 
-}treeStats;
+struct arrays {
 
-char ele[intMAX][intMAX];
-char W[charMAX], C[charMAX], R[charMAX], a[charMAX];
-float w[intMAX][intMAX], c[intMAX][intMAX], r[intMAX][intMAX], p[intMAX], q[intMAX];
+  char ele[intMAX][intMAX];
+  char W[charMAX], C[charMAX], R[charMAX], a[charMAX];
+  float w[intMAX][intMAX], c[intMAX][intMAX], r[intMAX][intMAX], p[intMAX], q[intMAX];
+
+}ar;
 
 /* Store W on 1 line, Store C on 1 line, Store R on 1 line */
-void treeOutput(int i, int j, int w, int c, int r) {
+void treeOutput(int i, int j, double w, double c, double r) {
 
-   sprintf(W, "%sW[%d][%d]: %d\t",W,i,j, w);
-   sprintf(C, "%sC[%d][%d]: %d\t",C,i,j, c);
-   sprintf(R, "%sR[%d][%d]: %d\t",R,i,j, r);
+   sprintf(ar.W, "%sW[%d][%d]: %.03f\t",ar.W,i,j, w);
+   sprintf(ar.C, "%sC[%d][%d]: %.03f\t",ar.C,i,j, c);
+   sprintf(ar.R, "%sR[%d][%d]: %.03f\t",ar.R,i,j, r);
 
 }
 
 /* Print current level of tree, Set W,C,R to empty string to prepare for next level */
 void printLevel() {
 
-    printf("\n%s\n%s\n%s\n",W,C,R);
-    sprintf(W,"");
-    sprintf(C,"");
-    sprintf(R,"");
+    printf("\n%s\n%s\n%s\n",ar.W,ar.C,ar.R);
+    sprintf(ar.W,"");
+    sprintf(ar.C,"");
+    sprintf(ar.R,"");
+
+}
+
+/* lineDraw() is used to print the divider inbetween prompts */
+void lineDraw() {
+
+  printf("\n--------------------------------\n");
 
 }
 
@@ -64,48 +67,52 @@ void printLevel() {
 void getInput(){
   
   int i;
-  double numer,deno;
+  float numer,deno;
   printf("Enter the number of elements:");
-  scanf("%d",&n);
+  scanf("%d",&ts.n);
 
  /* Get Keys from user (a) */
   lineDraw();
-  for(i=1; i <= n; i++) {
+  for(i=1; i <= ts.n; i++) {
 
     printf("Enter the A of %d:",i);
-    scanf("%s",&a[i]);
+    scanf("%s",&ar.a[i]);
  
   }
 
  /* Get Elements from user (p) */
   lineDraw();
-  for(i=1; i <= n; i++) {
+  for(i=1; i <= ts.n; i++) {
 
     printf("Enter the P (Element) of %d:\nFraction Numertator: ",i); 
      
-    scanf("%d",&numer);
+    scanf("%f",&numer);
     
-    printf("Fraction Denominator: ");
+    printf("-Fraction Denominator: ");
 
-    scanf("%d",&deno);
-   
-    p[i] = numer/deno;
+    scanf("%f",&deno);
+
+     printf("--%.0f/%.0f\n",numer, deno); 
+
+    ar.p[i] = numer/deno;
     
   }
 
  /* Get Probabilities from user (q) */
   lineDraw();
-  for(i=0; i <= n; i++) {
+  for(i=0; i <= ts.n; i++) {
 
     printf("Enter the Q (Probability) of %d:\nFraction Numertator: ",i); 
      
-    scanf("%d",&numer);
+    scanf("%f",&numer);
     
-    printf("Fraction Denominator: ");
+    printf("-Fraction Denominator: ");
 
-    scanf("%d",&deno);
+    scanf("%f",&deno);
    
-    q[i] = numer/deno;
+    printf("--%.0f/%.0f\n",numer, deno); 
+   
+    ar.q[i] = numer/deno;
 
   }
 
@@ -115,24 +122,21 @@ void getInput(){
 /* OBST, Produces Computational Matrix, Minimum cost, and Root */
 void OBST(){
 
-  int i;
-  int j;
-  int k;
-  int b;
+  int i, j, k, b;
+ 
+  ts.temp = 0.0;
 
- treeStats.temp = 0;
+  for(i=0; i <= ts.n; i++) {
 
- for(i=0; i <= n; i++) {
-
-    for(j=0; j <= n; j++) {
+    for(j=0; j <= ts.n; j++) {
       
       if(i == j) {
 
-        w[i][j] = q[i];
-        c[i][j] = 0;
-        r[i][j] = 0;
+        ar.w[i][j] = ar.q[i];
+        ar.c[i][j] = 0.0;
+        ar.r[i][j] = 0.0;
 
-       treeOutput(i,j,w[i][j],c[i][j],r[i][j]);
+       treeOutput(i,j,ar.w[i][j],ar.c[i][j],ar.r[i][j]);
 
       }
 
@@ -142,48 +146,41 @@ void OBST(){
 
   printLevel();
 
-  for(b = 0; b < n; b++){
+  for(b = 0; b < ts.n; b++){
 
-    for(i = 0, j = b + 1; (j < n + 1) && (i < n + 1); j++,i++) {
+    for(i = 0, j = b + 1; (j < ts.n + 1) && (i < ts.n + 1); j++,i++) {
 
       if(i != j && i < j)  {
 
-        w[i][j] = p[j] + q[j] + w[i][j-1];
+         ar.w[i][j] = ar.p[j] + ar.q[j] + ar.w[i][j-1];
         
-         treeStats.min = 30000;
+         ts.min = 30000.0;
 
         for(k = i+1; k <= j; k++){
 
-            treeStats.min1 = c[i][k-1] + c[k][j] + w[i][j];
+            ts.min1 = ar.c[i][k-1] + ar.c[k][j] + ar.w[i][j];
 
-          if(treeStats.min > treeStats.min1){
+          if(ts.min > ts.min1){
         
-            treeStats.min = treeStats.min1;
-            treeStats.temp = k;
+            ts.min = ts.min1;
+            ts.temp = k;
 
           }
 
         }
 
-        c[i][j] = treeStats.min;
-        r[i][j] = treeStats.temp;
+        ar.c[i][j] = ts.min;
+        ar.r[i][j] = ts.temp;
 
       }
 
-      treeOutput(i,j,w[i][j],c[i][j],r[i][j]);
+      treeOutput(i,j,ar.w[i][j],ar.c[i][j],ar.r[i][j]);
    
     }
 
   printLevel();
 
   }
-
-}
-
-/* lineDraw() is used to print the divider inbetween prompts */
-void lineDraw() {
-
-  printf("\n--------------------------------\n");
 
 }
 
@@ -197,11 +194,11 @@ int main() {
   /* Helper Method - it prints a line seperator */
   lineDraw();
   /* Print Minimum cost to console */
-  printf("Minimum cost = %f\n",c[0][n]);
+  printf("Minimum cost = %.03f\n",ar.c[0][ts.n]);
   /* Set root variable to determined root */
-  treeStats.root = r[0][n];
+  ts.root = ar.r[0][ts.n];
   /* Print root of tree to console */
-  printf("Root  = %d",treeStats.root);
+  printf("Root  = %.03f",ts.root);
   /* Helper Method - it prints a line seperator */
   lineDraw();
 
