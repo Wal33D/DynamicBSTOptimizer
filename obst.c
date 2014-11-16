@@ -64,10 +64,11 @@ void printLevel() {
 void getInput(){
   
   int i;
-  
+  double numer,deno;
   printf("Enter the number of elements:");
   scanf("%d",&n);
 
+ /* Get Keys from user (a) */
   lineDraw();
   for(i=1; i <= n; i++) {
 
@@ -76,19 +77,35 @@ void getInput(){
  
   }
 
+ /* Get Elements from user (p) */
   lineDraw();
   for(i=1; i <= n; i++) {
 
-    printf("Enter the P (Element) of %d:",i);
-    scanf("%f",&p[i]);
- 
+    printf("Enter the P (Element) of %d:\nFraction Numertator: ",i); 
+     
+    scanf("%d",&numer);
+    
+    printf("Fraction Denominator: ");
+
+    scanf("%d",&deno);
+   
+    p[i] = numer/deno;
+    
   }
 
+ /* Get Probabilities from user (q) */
   lineDraw();
   for(i=0; i <= n; i++) {
 
-    printf("Enter the Q (Probability) of %d:",i);
-    scanf("%f",&q[i]);
+    printf("Enter the Q (Probability) of %d:\nFraction Numertator: ",i); 
+     
+    scanf("%d",&numer);
+    
+    printf("Fraction Denominator: ");
+
+    scanf("%d",&deno);
+   
+    q[i] = numer/deno;
 
   }
 
