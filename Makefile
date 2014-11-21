@@ -21,3 +21,4 @@ count:
 
 clean:
 	rm -f *.o
+	rm -f obst

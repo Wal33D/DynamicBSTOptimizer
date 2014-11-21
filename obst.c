@@ -84,7 +84,7 @@ void getInput(){
   lineDraw();
   for(i=1; i <= ts.n; i++) {
 
-    printf("Enter the P (Element) of %d:\nFraction Numertator: ",i); 
+    printf("Enter the P (Element) of %d:\n-Fraction Numertator: ",i); 
      
     scanf("%f",&numer);
     
@@ -102,7 +102,7 @@ void getInput(){
   lineDraw();
   for(i=0; i <= ts.n; i++) {
 
-    printf("Enter the Q (Probability) of %d:\nFraction Numertator: ",i); 
+    printf("Enter the Q (Probability) of %d:\n-Fraction Numertator: ",i); 
      
     scanf("%f",&numer);
     
@@ -119,10 +119,13 @@ void getInput(){
    lineDraw();
 
 }
-/* OBST, Produces Computational Matrix, Minimum cost, and Root */
-void OBST(){
 
-  int i, j, k, b;
+/* Initial the the variables and arrays we will be using, 
+   counters i,k;
+*/
+void initOBST(){
+
+  int i, j;
  
   ts.temp = 0.0;
 
@@ -146,6 +149,15 @@ void OBST(){
 
   printLevel();
 
+}
+
+/* OBST, Produces Computational Matrix, Minimum cost, and Root */
+void OBST(){
+
+  initOBST();
+ 
+  int i, j, k, b;
+ 
   for(b = 0; b < ts.n; b++){
 
     for(i = 0, j = b + 1; (j < ts.n + 1) && (i < ts.n + 1); j++,i++) {
