@@ -13,13 +13,16 @@
    (3) Enter each element (p)
    (4) Enter the probability of each element (q)
   
-  It outputs the computational matrix associated with p and q input sets
+  It outputs the computational matrix associated with p and q input sets, the root, and the min cost
+
+  If all c(i, j )’s and r(i, j)’s are calculated, then OBST algorithm in worst case takes O(n3) time 
   
 /****************************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define intMAX 10
+#define MAX 10
+#define INT_MAX 30000
 #define charMAX 1000
 
 struct treeStats {
@@ -31,9 +34,8 @@ struct treeStats {
 
 struct arrays {
 
-  char ele[intMAX][intMAX];
-  char W[charMAX], C[charMAX], R[charMAX], a[charMAX];
-  float w[intMAX][intMAX], c[intMAX][intMAX], r[intMAX][intMAX], p[intMAX], q[intMAX];
+  char ele[MAX][MAX], W[charMAX], C[charMAX], R[charMAX], a[charMAX];
+  float w[MAX][MAX], c[MAX][MAX], r[MAX][MAX], p[MAX], q[MAX];
 
 }ar;
 
@@ -151,10 +153,12 @@ void initOBST(){
 
 }
 
-/* OBST, Produces Computational Matrix, Minimum cost, and Root */
-void OBST(){
+/* 
+    OBST, Produces Computational Matrix, Minimum cost, and Root 
 
-  initOBST();
+*/
+
+void OBST(){
  
   int i, j, k, b;
  
@@ -166,7 +170,7 @@ void OBST(){
 
          ar.w[i][j] = ar.p[j] + ar.q[j] + ar.w[i][j-1];
         
-         ts.min = 30000.0;
+         ts.min = INT_MAX;
 
         for(k = i+1; k <= j; k++){
 
@@ -201,6 +205,8 @@ int main() {
 
   /* Call our getInput() method to collect a, p & q */
   getInput();
+  /*Initialize OBST*/
+  initOBST();
   /* Call our OBST */
   OBST();
   /* Helper Method - it prints a line seperator */
