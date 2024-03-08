@@ -1,4 +1,4 @@
-# 🌳 Optimal Binary Search Tree Algorithms
+# 🌳 Dynamic (Optimal) Binary Search Tree Algorithms
 
 Welcome to **OptimalBinarySearchTree-C**, a cutting-edge software module designed to unravel the complexities of constructing an optimal binary search tree (BST) using the dynamic programming approach. Aimed at students, educators, and algorithm enthusiasts, this project illuminates the path to understanding efficient binary search trees, rooted in the principles of dynamic programming and algorithm optimization.
 
