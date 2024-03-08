@@ -14,7 +14,7 @@
   
   It outputs the computational matrix associated with p and q input sets
   
-=Terminal=========================================================
+=TerminimumCostal=========================================================
 	./obst 
 	Enter the number of elements:4
 
@@ -59,6 +59,6 @@
 	R[0][4]: 3	
 
 	-------------------------
-	Minimum cost = 55.000000
+	minimumCostimum cost = 55.000000
 	Root  = 3 
 	--------------------------------

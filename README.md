@@ -1,10 +1,10 @@
 # OptimalBinarySearchTree-C
 
-OptimalBinarySearchTree-C is a specialized software module designed to demonstrate how to construct an optimal binary search tree (BST) using dynamic programming. This project aims to serve as an educational tool for students, educators, and professionals interested in understanding the principles behind building efficient binary search trees given a set of keys and their search probabilities.
+OptimalBinarySearchTree-C is a specialized software module designed to demonstrate how to construct an optimal binary search tree (BST) using dynamic programminimumCostg. This project aims to serve as an educational tool for students, educators, and professionals interested in understanding the principles behind building efficient binary search trees given a set of keys and their search probabilities.
 
 ## Features
 
-- **Dynamic Programming Approach**: Implements a dynamic programming strategy to ensure the construction of the most cost-effective binary search tree.
+- **Dynamic ProgramminimumCostg Approach**: Implements a dynamic programminimumCostg strategy to ensure the construction of the most cost-effective binary search tree.
 - **Efficiency Analysis**: Provides tools for comparing the efficiency of the constructed tree with naive or brute-force approaches.
 - **Interactive Examples**: Includes a set of pre-defined examples that highlight how different key distributions affect the structure and efficiency of the final tree.
 - **Customizability**: Users can input their own sets of keys and probabilities to see how the optimal tree structure changes.
