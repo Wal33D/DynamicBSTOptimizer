@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS =
-OBJECTS = obst.o getInput.o  # Updated to include getInput.o
+OBJECTS = obst.o utils.o  # Updated to include utils.o instead of getInput.o
 INCFLAGS = -w
 LDFLAGS =
 LIBS =
