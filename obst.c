@@ -25,67 +25,83 @@
 
 #include "obst.h"
 
-/* Initialize the OBST with given probabilities and keys */
-void initializeOptimalBinarySearchTree()
+/* Initial the variables and arrays we will be using,
+   counters i,k;
+*/
+void initOBST()
 {
-    int indexI, indexJ;
-    treeNodeStruct.tempProbability = 0.0;
-    for (indexI = 0; indexI <= treeNodeStruct.numberOfElements; indexI++)
+  int i, j;
+  ts.temp = 0.0;
+  for (i = 0; i <= ts.n; i++)
+  {
+    for (j = 0; j <= ts.n; j++)
     {
-        for (indexJ = 0; indexJ <= treeNodeStruct.numberOfElements; indexJ++)
-        {
-            if (indexI == indexJ)
-            {
-                arrayStruct.weightMatrix[indexI][indexJ] = arrayStruct.probabilityQ[indexI];
-                arrayStruct.costMatrix[indexI][indexJ] = 0.0;
-                arrayStruct.rootMatrix[indexI][indexJ] = 0.0;
-                treeOutput(indexI, indexJ, arrayStruct.weightMatrix[indexI][indexJ], arrayStruct.costMatrix[indexI][indexJ], arrayStruct.rootMatrix[indexI][indexJ]);
-            }
-        }
+      if (i == j)
+      {
+        ar.w[i][j] = ar.q[i];
+        ar.c[i][j] = 0.0;
+        ar.r[i][j] = 0.0;
+        // This function call remains valid but is defined in utils.c
+        treeOutput(i, j, ar.w[i][j], ar.c[i][j], ar.r[i][j]);
+      }
     }
-    printLevel();
+  }
+  // This function call remains valid but is defined in utils.c
+  printLevel();
 }
 
-/* Compute the OBST and its minimum cost */
-void computeOptimalBinarySearchTree()
+/*
+    OBST, Produces Computational Matrix, Minimum cost, and Root
+*/
+void OBST()
 {
-    int indexI, indexJ, indexK, breadth;
-    for (breadth = 0; breadth < treeNodeStruct.numberOfElements; breadth++)
+  int i, j, k, b;
+  for (b = 0; b < ts.n; b++)
+  {
+    for (i = 0, j = b + 1; (j < ts.n + 1) && (i < ts.n + 1); j++, i++)
     {
-        for (indexI = 0, indexJ = breadth + 1; (indexJ < treeNodeStruct.numberOfElements + 1) && (indexI < treeNodeStruct.numberOfElements + 1); indexJ++, indexI++)
+      if (i != j && i < j)
+      {
+        ar.w[i][j] = ar.p[j] + ar.q[j] + ar.w[i][j - 1];
+        ts.min = INT_MAX;
+        for (k = i + 1; k <= j; k++)
         {
-            if (indexI != indexJ && indexI < indexJ)
-            {
-                arrayStruct.weightMatrix[indexI][indexJ] = arrayStruct.probabilityP[indexJ] + arrayStruct.probabilityQ[indexJ] + arrayStruct.weightMatrix[indexI][indexJ - 1];
-                treeNodeStruct.minimumCost = INT_MAX;
-                for (indexK = indexI + 1; indexK <= indexJ; indexK++)
-                {
-                    treeNodeStruct.temporaryMinimumCost = arrayStruct.costMatrix[indexI][indexK - 1] + arrayStruct.costMatrix[indexK][indexJ] + arrayStruct.weightMatrix[indexI][indexJ];
-                    if (treeNodeStruct.minimumCost > treeNodeStruct.temporaryMinimumCost)
-                    {
-                        treeNodeStruct.minimumCost = treeNodeStruct.temporaryMinimumCost;
-                        treeNodeStruct.tempProbability = indexK;
-                    }
-                }
-                arrayStruct.costMatrix[indexI][indexJ] = treeNodeStruct.minimumCost;
-                arrayStruct.rootMatrix[indexI][indexJ] = treeNodeStruct.tempProbability;
-                treeOutput(indexI, indexJ, arrayStruct.weightMatrix[indexI][indexJ], arrayStruct.costMatrix[indexI][indexJ], arrayStruct.rootMatrix[indexI][indexJ]);
-            }
+          ts.min1 = ar.c[i][k - 1] + ar.c[k][j] + ar.w[i][j];
+          if (ts.min > ts.min1)
+          {
+            ts.min = ts.min1;
+            ts.temp = k;
+          }
         }
-        printLevel();
+        ar.c[i][j] = ts.min;
+        ar.r[i][j] = ts.temp;
+        // This function call remains valid but is defined in utils.c
+        treeOutput(i, j, ar.w[i][j], ar.c[i][j], ar.r[i][j]);
+      }
     }
+    // This function call remains valid but is defined in utils.c
+    printLevel();
+  }
 }
 
 int main()
 {
-    getInput();
-    initializeOptimalBinarySearchTree();
-    computeOptimalBinarySearchTree();
+  // This function call remains valid but is defined in utils.c
+  getInput();
+  initOBST();
+  OBST();
 
-    printf("Minimum cost = %.03f\n", arrayStruct.costMatrix[0][treeNodeStruct.numberOfElements]);
-    treeNodeStruct.root = arrayStruct.rootMatrix[0][treeNodeStruct.numberOfElements];
-    printf("Root = %.03f\n", treeNodeStruct.root);
-    lineDraw();
+  // Print Minimum cost to console
+  printf("Minimum cost = %.03f\n", ar.c[0][ts.n]);
 
-    return 0;
+  // Set root variable to determined root
+  ts.root = ar.r[0][ts.n];
+
+  // Print root of tree to console
+  printf("Root = %.03f\n", ts.root);
+
+  // This function call remains valid but is defined in utils.c
+  lineDraw();
+
+  return 0;
 }
