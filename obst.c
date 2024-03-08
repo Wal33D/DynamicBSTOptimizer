@@ -32,17 +32,17 @@ void OBST()
       if (i != j && i < j)
       {
         treeData.w[i][j] = treeData.p[j] + treeData.q[j] + treeData.w[i][j - 1];
-        treeStats.min = INT_MAX;
+        treeStats.minimumCost = INT_MAX;
         for (k = i + 1; k <= j; k++)
         {
-          treeStats.temporaryMinimumCost = treeData.c[i][k - 1] + treeData.c[k][j] + treeData.w[i][j];
-          if (treeStats.min > treeStats.temporaryMinimumCost)
+          treeStats.minimumCost1 = treeData.c[i][k - 1] + treeData.c[k][j] + treeData.w[i][j];
+          if (treeStats.minimumCost > treeStats.minimumCost1)
           {
-            treeStats.min = treeStats.temporaryMinimumCost;
+            treeStats.minimumCost = treeStats.minimumCost1;
             treeStats.temp = k;
           }
         }
-        treeData.c[i][j] = treeStats.min;
+        treeData.c[i][j] = treeStats.minimumCost;
         treeData.r[i][j] = treeStats.temp;
 
         treeOutput(i, j, treeData.w[i][j], treeData.c[i][j], treeData.r[i][j]);
