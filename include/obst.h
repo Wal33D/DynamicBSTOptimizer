@@ -12,7 +12,7 @@
 struct treeStats
 {
   int n;
-  float temp, root, minimumCost, temporaryMinimumCost;
+  float temporaryRoot, root, minimumCost, temporaryMinimumCost;
 };
 
 struct arrays
