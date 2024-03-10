@@ -85,7 +85,7 @@ Your insights can help DynamicBSTOptimizer-C grow! We welcome contributions, be 
 
 ## 📜 License
 
-DynamicBSTOptimizer-C is open-sourced under the MIT License. Dive into the LICENSE file for more details.
+DynamicBSTOptimizer-C is open-sourced under the MIT License.
 
 ## 💖 Acknowledgments
 
