@@ -1,6 +1,6 @@
 # 🌳 Dynamic (Optimal) Binary Search Tree Algorithms
 
-Welcome to **OptimalBinarySearchTree-C**, a cutting-edge software module designed to unravel the complexities of constructing an optimal binary search tree (BST) using the dynamic programming approach. Aimed at students, educators, and algorithm enthusiasts, this project illuminates the path to understanding efficient binary search trees, rooted in the principles of dynamic programming and algorithm optimization.
+Welcome to **DynamicBSTOptimizer-C**, a cutting-edge software module designed to unravel the complexities of constructing an optimal binary search tree (BST) using the dynamic programming approach. Aimed at students, educators, and algorithm enthusiasts, this project illuminates the path to understanding efficient binary search trees, rooted in the principles of dynamic programming and algorithm optimization.
 
 ## 🌟 Features
 
@@ -19,23 +19,19 @@ Gear up for your journey into algorithmic efficiency with:
 
 ## 🔧 Installation
 
-Embark on your adventure with OptimalBinarySearchTree-C by following these steps:
+Embark on your adventure with DynamicBSTOptimizer-C by following these steps:
 
 1. **Clone the repository**:
    \`\`\`bash
-   git clone https://github.com/yourusername/OptimalBinarySearchTree-C.git
+   git clone https://github.com/yourusername/DynamicBSTOptimizer-C.git
    \`\`\`
 
 2. **Navigate to your project directory**:
    \`\`\`bash
-   cd OptimalBinarySearchTree-C
+   cd DynamicBSTOptimizer-C
    \`\`\`
 
 3. **Compile with GCC**:
-   \`\`\`bash
-   gcc -o OptimalBST main.c -lm
-   \`\`\`
-   Or, if you're using Make:
    \`\`\`bash
    make
    \`\`\`
@@ -45,7 +41,7 @@ Embark on your adventure with OptimalBinarySearchTree-C by following these steps
 Launch OptimalBST to start constructing and analyzing your optimal binary search tree:
 
 \`\`\`bash
-./OptimalBST
+./build/obst
 \`\`\`
 
 Follow the prompts to input keys and their search probabilities. The tool then unveils the structure and efficiency metrics of your custom optimal BST.
@@ -79,7 +75,7 @@ Root  = 3
 
 ## 👥 Contributing
 
-Your insights can help OptimalBinarySearchTree-C grow! We welcome contributions, be it through feature suggestions, documentation enhancements, or bug fixes. Here's how you can contribute:
+Your insights can help DynamicBSTOptimizer-C grow! We welcome contributions, be it through feature suggestions, documentation enhancements, or bug fixes. Here's how you can contribute:
 
 1. Fork the repository.
 2. Create your feature branch (\`git checkout -b feature/AmazingFeature\`).
@@ -89,10 +85,10 @@ Your insights can help OptimalBinarySearchTree-C grow! We welcome contributions,
 
 ## 📜 License
 
-OptimalBinarySearchTree-C is open-sourced under the MIT License. Dive into the LICENSE file for more details.
+DynamicBSTOptimizer-C is open-sourced under the MIT License. Dive into the LICENSE file for more details.
 
 ## 💖 Acknowledgments
 
 - A heartfelt thank you to all contributors and the computer science community for inspiring this educational tool.
 
-Embark on your journey to algorithmic brilliance with **OptimalBinarySearchTree-C**. Happy coding!
+Embark on your journey to algorithmic brilliance with **DynamicBSTOptimizer-C**. Happy coding!

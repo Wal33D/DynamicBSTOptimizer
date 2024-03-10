@@ -1,92 +1,114 @@
-#include "obst.h" 
+// Name: <Wal33D>
 
-// Initializes the matrices used in the OBST calculation.
+// This is an Optimal Binary Search Tree Algorithms.
+
+//  (1) Enter # of elements
+//  (2) Enter a numerical or alphabetic key for each element (a)
+//  (3) Enter each element (p)
+// (4) Enter the probability of each element (q)
+
+// It outputs the computational matrix associated with p and q input sets, the root, and the min cost
+//
+//  If all
+//  c(i, j)’s and r(i, j)’s are calculated,
+//  then OBST algorithm in worst case takes O(n3) time
+
+#include "utils.h"
+
+// Initial the the variables and arrays we will be using, counters i,k;
+
 void initOBST()
 {
-  int i, j; // Loop counters.
-  treeStats.temporaryRoot = 0.0; // Initialize temporary root for calculation.
-  
-  // Initialize the weight (w), cost (c), and root (r) matrices.
-  for (i = 0; i <= treeStats.n; i++)
-  {
-    for (j = 0; j <= treeStats.n; j++)
-    {
-      if (i == j) // Diagonal elements where tree only has one node.
-      {
-        treeData.w[i][j] = treeData.q[i]; // Weight is equal to the probability of searching for a non-existent element.
-        treeData.c[i][j] = 0.0; // Cost is zero since there are no deeper levels.
-        treeData.r[i][j] = 0.0; // Root is set to zero as placeholder.
 
-        // Output the initial values for w, c, and r for this (i, j) pair.
-        treeOutput(i, j, treeData.w[i][j], treeData.c[i][j], treeData.r[i][j]);
+  int i, j;
+
+  ts.temp = 0.0;
+
+  for (i = 0; i <= ts.n; i++)
+  {
+
+    for (j = 0; j <= ts.n; j++)
+    {
+
+      if (i == j)
+      {
+
+        ar.w[i][j] = ar.q[i];
+        ar.c[i][j] = 0.0;
+        ar.r[i][j] = 0.0;
+
+        treeOutput(i, j, ar.w[i][j], ar.c[i][j], ar.r[i][j]);
       }
     }
   }
 
-  // Print the initialized level of matrices.
   printLevel();
 }
 
-// Main algorithm to calculate the OBST based on dynamic programming.
+// OBST, Produces Computational Matrix, Minimum cost, and Root
+
 void OBST()
 {
-  int i, j, k, b; // Loop counters and indices.
-  // Iterate through all possible subtrees and calculate costs.
-  for (b = 0; b < treeStats.n; b++)
+
+  int i, j, k, b;
+
+  for (b = 0; b < ts.n; b++)
   {
-    for (i = 0, j = b + 1; (j < treeStats.n + 1) && (i < treeStats.n + 1); j++, i++)
+
+    for (i = 0, j = b + 1; (j < ts.n + 1) && (i < ts.n + 1); j++, i++)
     {
-      if (i != j && i < j) // Ensure we're looking at valid subtrees.
+
+      if (i != j && i < j)
       {
-        // Calculate weight of the subtree.
-        treeData.w[i][j] = treeData.p[j] + treeData.q[j] + treeData.w[i][j - 1];
-        // Initialize the minimum cost to a large value.
-        treeStats.minimumCost = INT_MAX;
-        // Iterate through possible roots of the subtree.
+
+        ar.w[i][j] = ar.p[j] + ar.q[j] + ar.w[i][j - 1];
+
+        ts.min = INT_MAX;
+
         for (k = i + 1; k <= j; k++)
         {
-          // Calculate the cost if k is the root.
-          treeStats.minimumCost1 = treeData.c[i][k - 1] + treeData.c[k][j] + treeData.w[i][j];
-          // Update minimum cost and root if a new minimum is found.
-          if (treeStats.minimumCost > treeStats.minimumCost1)
+
+          ts.min1 = ar.c[i][k - 1] + ar.c[k][j] + ar.w[i][j];
+
+          if (ts.min > ts.min1)
           {
-            treeStats.minimumCost = treeStats.minimumCost1;
-            treeStats.temporaryRoot = k;
+
+            ts.min = ts.min1;
+            ts.temp = k;
           }
         }
-        // Update matrices with the minimum cost and root found.
-        treeData.c[i][j] = treeStats.minimumCost;
-        treeData.r[i][j] = treeStats.temporaryRoot;
 
-        // Output the calculated values for w, c, and r for this (i, j) pair.
-        treeOutput(i, j, treeData.w[i][j], treeData.c[i][j], treeData.r[i][j]);
+        ar.c[i][j] = ts.min;
+        ar.r[i][j] = ts.temp;
       }
+
+      treeOutput(i, j, ar.w[i][j], ar.c[i][j], ar.r[i][j]);
     }
 
-    // Print the calculated level of matrices.
     printLevel();
   }
 }
 
-// The main function driving the OBST program.
+// int main() is our control function
 int main()
 {
-  // Gather input from the user regarding the elements, probabilities, etc.
+
+  // Call our getInput() method to collect a, p & q
   getInput();
-  // Initialize the necessary matrices and variables for the OBST calculation.
+  // Initialize OBST
   initOBST();
-  // Perform the OBST calculation based on the provided input.
+  // Call our OBST
   OBST();
-
-  // Print the final minimum cost to build the OBST.
-  printf("Minimum cost = %.03f\n", treeData.c[0][treeStats.n]);
-
-  // Determine and print the root of the OBST.
-  treeStats.root = treeData.r[0][treeStats.n];
-  printf("Root = %.03f\n", treeStats.root);
-
-  // Draw a line for visual separation at the end.
+  // Helper Method - it prints a line seperator
+  lineDraw();
+  // Print Minimum cost to console
+  printf("Minimum cost = %.03f\n", ar.c[0][ts.n]);
+  // Set root variable to determined root
+  ts.root = ar.r[0][ts.n];
+  // Print root of tree to console
+  printf("Root  = %.03f", ts.root);
+  // Helper Method - it prints a line seperator
   lineDraw();
 
-  return 0; // End of program.
+  return 0;
 }

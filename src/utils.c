@@ -1,58 +1,99 @@
-#include <stdio.h>
-#include "obst.h"
+#include "utils.h"
 
-// Function to get input from the user. This includes the number of elements, and for each element:
-// - Its key (denoted as 'A')
-// - Its associated probability (element 'P')
-// - Its search probability when it's not found ('Q')
-void getInput()
+struct treeStats ts;
+struct arrays ar;
+
+// Store W on 1 line, Store C on 1 line, Store R on 1 line
+void treeOutput(int i, int j, double w, double c, double r)
 {
-  int i; // Loop counter
-  float numer, deno; // Temporary variables to store numerator and denominator for fractional inputs
+  // Temporary buffers to store individual strings
+  char tempW[100], tempC[100], tempR[100];
 
-  // Prompt user to enter the number of elements in the binary search tree
-  printf("Enter the number of elements:");
-  scanf("%d", &treeStats.n); // Read and store the number of elements in the treeStats structure
-  lineDraw(); // Draw a line for visual separation
+  // Safely format strings with snprintf and append using strncat
+  snprintf(tempW, sizeof(tempW), "W[%d][%d]: %.03f\t", i, j, w);
+  snprintf(tempC, sizeof(tempC), "C[%d][%d]: %.03f\t", i, j, c);
+  snprintf(tempR, sizeof(tempR), "R[%d][%d]: %.03f\t", i, j, r);
 
-  // Loop to get the keys ('A') of the elements
-  for (i = 1; i <= treeStats.n; i++)
-  {
-    printf("Enter the A of %d:", i); // Prompt for the i-th element's key
-    scanf("%s", treeData.a[i]); // Read and store the key in the treeData structure
-  }
-  lineDraw(); // Draw a line for visual separation
-
-  // Loop to get the elements ('P') and their numerator and denominator
-  for (i = 1; i <= treeStats.n; i++)
-  {
-    printf("Enter the P (Element) of %d:\n-Fraction Numertator: ", i); // Prompt for the element's probability numerator
-    scanf("%f", &numer); // Read numerator
-    printf("-Fraction Denominator: "); // Prompt for the denominator
-    scanf("%f", &deno); // Read denominator
-    printf("--%.0f/%.0f\n", numer, deno); // Print the fraction for verification
-    treeData.p[i] = numer / deno; // Calculate and store the fraction as a float
-  }
-  lineDraw(); // Draw a line for visual separation
-
-  // Loop to get the search probabilities ('Q') for not found elements and their numerator and denominator
-  for (i = 0; i <= treeStats.n; i++)
-  {
-    printf("Enter the Q (Probability) of %d:\n-Fraction Numertator: ", i); // Prompt for the probability's numerator
-    scanf("%f", &numer); // Read numerator
-    printf("-Fraction Denominator: "); // Prompt for the denominator
-    scanf("%f", &deno); // Read denominator
-    printf("--%.0f/%.0f\n", numer, deno); // Print the fraction for verification
-    treeData.q[i] = numer / deno; // Calculate and store the fraction as a float
-  }
-  lineDraw(); // Draw a line for visual separation
+  // Check and append if there's enough space
+  if (strlen(ar.W) + strlen(tempW) < charMAX)
+    strncat(ar.W, tempW, sizeof(ar.W) - strlen(ar.W) - 1);
+  if (strlen(ar.C) + strlen(tempC) < charMAX)
+    strncat(ar.C, tempC, sizeof(ar.C) - strlen(ar.C) - 1);
+  if (strlen(ar.R) + strlen(tempR) < charMAX)
+    strncat(ar.R, tempR, sizeof(ar.R) - strlen(ar.R) - 1);
 }
 
-// Function to draw a line in the console for visual separation of different sections
+// Print current level of tree, Set W,C,R to empty string to prepare for next level
+void printLevel()
+{
+  printf("\n%s\n%s\n%s\n", ar.W, ar.C, ar.R);
+
+  // Reset W, C, R to empty strings efficiently
+  ar.W[0] = '\0';
+  ar.C[0] = '\0';
+  ar.R[0] = '\0';
+}
+
+// lineDraw() is used to print the divider inbetween prompts
 void lineDraw()
 {
+
   printf("\n--------------------------------\n");
 }
 
-// Function to format and print the computed W, C, and R matrices' values for a given (i, j) pair
-void treeOutput
+// Get user input, Keys, Elements, Probability
+void getInput(void)
+{
+
+    int i;
+    float numer, deno;
+    printf("Enter the number of elements:");
+    scanf("%d", &ts.n);
+
+    // Get Keys from user (a)
+    lineDraw();
+    for (i = 1; i <= ts.n; i++)
+    {
+
+        printf("Enter the A of %d:", i);
+        scanf("%s", &ar.a[i]);
+    }
+
+    // Get Elements from user (p)
+    lineDraw();
+    for (i = 1; i <= ts.n; i++)
+    {
+
+        printf("Enter the P (Element) of %d:\n-Fraction Numertator: ", i);
+
+        scanf("%f", &numer);
+
+        printf("-Fraction Denominator: ");
+
+        scanf("%f", &deno);
+
+        printf("--%.0f/%.0f\n", numer, deno);
+
+        ar.p[i] = numer / deno;
+    }
+
+    // Get Probabilities from user (q)
+    lineDraw();
+    for (i = 0; i <= ts.n; i++)
+    {
+
+        printf("Enter the Q (Probability) of %d:\n-Fraction Numertator: ", i);
+
+        scanf("%f", &numer);
+
+        printf("-Fraction Denominator: ");
+
+        scanf("%f", &deno);
+
+        printf("--%.0f/%.0f\n", numer, deno);
+
+        ar.q[i] = numer / deno;
+    }
+
+    lineDraw();
+}
